@@ -27,7 +27,6 @@ public class QuoteListActivity extends Activity {
     private ListView lv_quote_list_list;
     private TextView tv_quote_list_list;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
