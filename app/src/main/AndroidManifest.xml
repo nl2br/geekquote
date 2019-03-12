@@ -17,5 +17,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="fr.mds.geekquote.activity.SecondActivity"></activity>
+
         </application>
 </manifest>

@@ -1,6 +1,7 @@
 package fr.mds.geekquote.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,12 +63,13 @@ public class QuoteListActivity extends Activity {
             addQuote(myNote);
         }
 
-//        lv_quote_list_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(QuoteListActivity.this, quotes.get(position),).show();
-//            }
-//        });
+        lv_quote_list_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(QuoteListActivity.this, SecondActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Log.d(TAG, quotes.toString());
     }
