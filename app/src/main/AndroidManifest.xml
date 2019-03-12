@@ -21,5 +21,9 @@
 
         <activity android:name="fr.mds.geekquote.activity.SecondActivity"></activity>
 
-        </application>
+            <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a8c3c52ca46218195bbf75785f59bae5d75afa3a" />
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

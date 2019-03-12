@@ -14,10 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.myschool.geekquote.R;
 import fr.mds.geekquote.model.Quote;
 import fr.mds.geekquote.adapter.QuoteViewAdapter;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -38,6 +40,7 @@ public class QuoteListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 
         setContentView(R.layout.quote_list);
 
