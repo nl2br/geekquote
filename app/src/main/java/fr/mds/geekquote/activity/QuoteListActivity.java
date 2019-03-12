@@ -18,6 +18,7 @@ import com.myschool.geekquote.R;
 import fr.mds.geekquote.model.Quote;
 import fr.mds.geekquote.adapter.QuoteViewAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static android.widget.Toast.*;
@@ -32,6 +33,7 @@ public class QuoteListActivity extends Activity {
     private EditText et_quote_list_quote_content;
     private ListView lv_quote_list_list;
     private TextView tv_quote_list_list;
+    private QuoteViewAdapter quoteViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +46,16 @@ public class QuoteListActivity extends Activity {
         et_quote_list_quote_content = findViewById(R.id.et_quote_list_quote_content);
         lv_quote_list_list = findViewById(R.id.lv_quote_list_list);
 
-        final QuoteViewAdapter quoteViewAdapter = new QuoteViewAdapter(this, quotes);
+        quoteViewAdapter = new QuoteViewAdapter(this, quotes);
         lv_quote_list_list.setAdapter(quoteViewAdapter);
 
         bt_quote_list_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "QuotesListActivity - OnClick");
-                addQuote(et_quote_list_quote_content.getText().toString());
-                et_quote_list_quote_content.setText("");
-                quoteViewAdapter.notifyDataSetChanged();
+            Log.d(TAG, "QuotesListActivity - OnClick");
+            addQuote(et_quote_list_quote_content.getText().toString());
+            et_quote_list_quote_content.setText("");
+            quoteViewAdapter.notifyDataSetChanged();
             }
         });
 
@@ -66,12 +68,38 @@ public class QuoteListActivity extends Activity {
         lv_quote_list_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // explicit car on spécifie quelle classe utliser
                 Intent intent = new Intent(QuoteListActivity.this, SecondActivity.class);
-                startActivity(intent);
+                Log.d(TAG, "onClick" + position);
+                intent.putExtra("position",position);
+                intent.putExtra("quote", quotes.get(position));
+                //startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
 
         Log.d(TAG, quotes.toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG,"onActivityResult " + requestCode +" "+resultCode + " " + data);
+        // recuperer les datas envoyées
+
+        if(data != null){
+        Bundle extras = data.getExtras();
+
+            Quote newQuote = (Quote) extras.getSerializable("newQuote");
+            Integer position = extras.getInt("position");
+            Log.d(TAG, "newQuote - OnClick " + position + " " + newQuote.toString() );
+
+            // remplacer la quote dans le array
+            quotes.set(position,newQuote);
+
+            // refresh
+            quoteViewAdapter.notifyDataSetChanged();
+        }
     }
 
     void addQuote(String strQuote){

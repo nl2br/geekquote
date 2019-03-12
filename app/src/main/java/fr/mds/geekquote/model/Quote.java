@@ -1,8 +1,9 @@
 package fr.mds.geekquote.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Quote {
+public class Quote implements Serializable {
 
     private String strQuote;
     private int rating;
