@@ -8,12 +8,13 @@ import android.widget.TextView;
 
 import com.myschool.geekquote.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import fr.mds.geekquote.model.Quote;
 
-public class QuoteListListViewAdapter extends ArrayAdapter<Quote> {
+public class QuoteViewAdapter extends ArrayAdapter<Quote> {
 
-    public QuoteListListViewAdapter(Context context, ArrayList<Quote> quotes) {
+    public QuoteViewAdapter(Context context, ArrayList<Quote> quotes) {
         super(context, 0, quotes);
     }
 
@@ -34,7 +35,8 @@ public class QuoteListListViewAdapter extends ArrayAdapter<Quote> {
 
         // Populate the data into the template view using the data object
         lv_quote_list_item_quote.setText(quote.getStrQuote());
-        lv_quote_list_item_date.setText((CharSequence) quote.getCreationDate());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        lv_quote_list_item_date.setText(sdf.format(quote.getCreationDate()));
 
         // Return the completed view to render on screen
         return convertView;

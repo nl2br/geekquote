@@ -1,17 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-    <TextView
-        android:id="@+id/lv_quote_list_item_quote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="content" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/lv_quote_list_item_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/lv_quote_list_item_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="creation date" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/lv_quote_list_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="creation date"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
 
 </LinearLayout>
