@@ -35,7 +35,7 @@ public class QuoteViewAdapter extends ArrayAdapter<Quote> {
 
         // Populate the data into the template view using the data object
         lv_quote_list_item_quote.setText(quote.getStrQuote());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         lv_quote_list_item_date.setText(sdf.format(quote.getCreationDate()));
 
         // Return the completed view to render on screen
