@@ -20,6 +20,5 @@ public class SecondActivity extends Activity {
 
         setContentView(R.layout.second_activity);
 
-
     }
 }
