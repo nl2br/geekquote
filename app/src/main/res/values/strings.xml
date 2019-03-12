@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Geek Quote</string>
+    <string name="default_text">Default text</string>
+    <string name="add_note">Your note</string>
+    <string name="toast_add_note">Toastyyyyyyy</string>
+    <string-array name="quotes_list">
+        <item>my first note</item>
+        <item>my second note</item>
+        <item>my third note</item>
+    </string-array>
+</resources>
