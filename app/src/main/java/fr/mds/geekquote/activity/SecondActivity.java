@@ -80,4 +80,16 @@ public class SecondActivity extends Activity {
 
 
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG,"Act 2 onRestoreInstanceState " + savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG,"Act 2 onSaveInstanceState " + outState);
+        super.onSaveInstanceState(outState);
+    }
 }

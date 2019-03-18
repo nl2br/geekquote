@@ -1,5 +1,8 @@
 package fr.mds.geekquote.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -43,4 +46,34 @@ public class Quote implements Serializable {
     public String toString() {
         return strQuote;
     }
+/*
+    protected Quote(Parcel in) {
+        strQuote = in.readString();
+        rating = in.readInt();
+        creationDate = new Date(in.readLong());
+    }
+
+    public final Creator<Quote> CREATOR = new Creator() {
+        @Override
+        public Quote createFromParcel(Parcel in) {
+            return new Quote(in);
+        }
+
+        @Override
+        public Quote[] newArray(int size) {
+            return new Quote[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(strQuote);
+        parcel.writeInt(rating);
+        parcel.writeLong(Long.parseLong(creationDate.toString()));
+    }*/
 }

@@ -42,6 +42,8 @@ public class QuoteListActivity extends Activity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
 
+
+
         setContentView(R.layout.quote_list);
 
         ll_quote_list_main = findViewById(R.id.ll_quote_list_main);
@@ -61,13 +63,15 @@ public class QuoteListActivity extends Activity {
             quoteViewAdapter.notifyDataSetChanged();
             }
         });
+        if (savedInstanceState != null) {
 
-        Resources resources = getResources();
-        String[] myNotes = resources.getStringArray(R.array.quotes_list);
-        for (String myNote : myNotes) {
-            addQuote(myNote);
+        }else {
+            Resources resources = getResources();
+            String[] myNotes = resources.getStringArray(R.array.quotes_list);
+            for (String myNote : myNotes) {
+                addQuote(myNote);
+            }
         }
-
         lv_quote_list_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,7 +97,7 @@ public class QuoteListActivity extends Activity {
         if(data != null){
         Bundle extras = data.getExtras();
 
-            Quote newQuote = (Quote) extras.getSerializable("newQuote");
+            Quote newQuote = (Quote) extras.getParcelable("newQuote");
             Integer position = extras.getInt("position");
             Log.d(TAG, "newQuote - OnClick " + position + " " + newQuote.toString() );
 
@@ -108,5 +112,19 @@ public class QuoteListActivity extends Activity {
     void addQuote(String strQuote){
         Quote quote = new Quote(strQuote);
         quotes.add(quote);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG,"Act 1 onRestoreInstanceState " + savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
+        quotes.addAll((ArrayList<Quote>) savedInstanceState.getSerializable("quotes"));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG,"Act 1 onSaveInstanceState " + outState);
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("quotes",quotes);
     }
 }
