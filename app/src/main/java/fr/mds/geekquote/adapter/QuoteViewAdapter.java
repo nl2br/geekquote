@@ -29,7 +29,6 @@ public class QuoteViewAdapter extends ArrayAdapter<Quote> {
 
         // Get the data item for this position
         Quote quote = getItem(position);
-        Log.d(QuoteListActivity.TAG, "quote from view : " + quote);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.quote_list_item_quote, parent, false);

@@ -33,6 +33,8 @@ public class QuoteDetailActivity extends Activity {
     private TextView tv_second;
     private ArrayList<Quote> quotes = new ArrayList<>();
     private SQLiteQuoteDao db;
+    private Quote currentQuote;
+    private Integer currentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +59,16 @@ public class QuoteDetailActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
 
-            Integer position = null;
-
-            position = extras.getInt("position");
-            Log.d(TAG, "Position: " + position );
+            Integer id = extras.getInt("id");
             Quote quote = (Quote) extras.getSerializable("quote");
-            Log.d(TAG, "quote: " + quote);
-            Log.d(TAG, "quote.toString: " + quote.toString());
+            currentPosition = extras.getInt("position");
 
-            tv_second.setText(quote.toString());
+            currentQuote = quote;
+
+            Log.d(TAG, "get Id: " + quote.getId() );
+            Log.d(TAG, "get quote: " + quote.getStrQuote());
+
+            tv_second.setText(quote.getStrQuote());
         }
 
         // retourner les données modifier
@@ -73,21 +76,24 @@ public class QuoteDetailActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                // créer un new quote
-                Quote newQuote = new Quote(tv_second.getText().toString());
+                // update de la quote
+                currentQuote.setStrQuote(tv_second.getText().toString());
+
+                db = new SQLiteQuoteDao(QuoteDetailActivity.this);
 
                 // update dans la base
-                db = new SQLiteQuoteDao(QuoteDetailActivity.this);
-                int numRow = db.updateQuote(newQuote);
+                int numRow = db.updateQuote(currentQuote);
                 if(numRow!=0){
                     Log.d(TAG, "UPDATE SUCCESS: " + numRow );
                 }else{
                     Log.d(TAG, "UPDATE FAILED");
                 }
 
-
-                getIntent().putExtra("newQuote",newQuote);
-                getIntent().putExtra("position",getIntent().getExtras().getInt("position"));
+                // renvoyer les infos à quoteListActivity
+                getIntent().putExtra("id",currentQuote.getId());
+                getIntent().putExtra("updatedQuote",currentQuote);
+                getIntent().putExtra("position",currentPosition);
+                //getIntent().putExtra("id",getIntent().getExtras().getInt("id"));
                 setResult(RESULT_OK,getIntent());
                 finish();
             }
