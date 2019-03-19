@@ -65,8 +65,8 @@ public class QuoteListActivity extends Activity {
 //
 //            quotes = gson.fromJson(jsonList,listType);
 //        }
-
-        quotes = (ArrayList<Quote>) db.getAllQuotes();
+        db = new SQLiteQuoteDao(this);
+        quotes = db.getAllQuotes();
 
         ll_quote_list_main = findViewById(R.id.ll_quote_list_main);
         bt_quote_list_add = findViewById(R.id.bt_quote_list_add);
@@ -115,9 +115,12 @@ public class QuoteListActivity extends Activity {
 
                 // explicit car on spécifie quelle classe utliser
                 Intent intent = new Intent(QuoteListActivity.this, QuoteDetailActivity.class);
+
                 Log.d(TAG, "onClick" + position);
                 intent.putExtra("position",position);
+                //intent.putExtra("position",quote.getId());
                 intent.putExtra("quote", quotes.get(position));
+                //intent.putExtra("quote", quote);
                 //startActivity(intent);
                 startActivityForResult(intent,0);
             }
@@ -157,7 +160,7 @@ public class QuoteListActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.d(TAG,"Act 1 onRestoreInstanceState " + savedInstanceState);
         super.onRestoreInstanceState(savedInstanceState);
-        quotes.addAll((ArrayList<Quote>) savedInstanceState.getSerializable("quotes"));
+        //quotes.addAll((ArrayList<Quote>) savedInstanceState.getSerializable("quotes"));
     }
 
     @Override
@@ -171,11 +174,11 @@ public class QuoteListActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        String lastQuote = sharedPreferences.getString("last_quote","");
+/*        String lastQuote = sharedPreferences.getString("last_quote","");
         if(lastQuote != null && !lastQuote.isEmpty()){
             Log.d(TAG,"on resume, last quote = " + lastQuote);
             Toast.makeText(this,lastQuote,Toast.LENGTH_SHORT).show();
 
-        }
+        }*/
     }
 }

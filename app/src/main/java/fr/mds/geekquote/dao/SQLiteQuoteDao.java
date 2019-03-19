@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.mds.geekquote.activity.QuoteListActivity;
@@ -24,7 +25,34 @@ public class SQLiteQuoteDao {
 
     public Quote getQuoteById(Long id){
         Log.d(QuoteListActivity.TAG, "Get quote: " + id);
-        return null;
+        String[] columns = {DatabaseOpenHelper.COLUMN_ID, DatabaseOpenHelper.COLUMN_STR_QUOTE, DatabaseOpenHelper.COLUMN_RATING, DatabaseOpenHelper.COLUMN_DATE };
+        String[] params = {String.valueOf(id)};
+        Cursor result = db.query(DatabaseOpenHelper.DATABASE_TABLE, columns,"id=?",params,null,null,null);
+        //Cursor result = db.rawQuery("SELECT * FROM " + DatabaseOpenHelper.DATABASE_TABLE + " WHERE id=" + id + ";",null);
+        //ArrayList<Quote> quotes = new ArrayList<Quote>();
+        result.moveToFirst();
+        Quote resQuote = null;
+        if(result.getCount() > 0){
+            Log.d(QuoteListActivity.TAG, "QUERY OK: " + result);
+            Quote quote = new Quote(result.getString(1));
+            quote.setRating(result.getInt(2));
+            quote.setId(result.getInt(0));
+            quote.setCreationDate(new Date(result.getInt(3)));
+            //quotes.add(quote);
+            resQuote = quote;
+        }
+
+/*        while(!result.isAfterLast()){
+            Quote quote = new Quote(result.getString(1));
+            quote.setRating(result.getInt(2));
+            quote.setId(result.getInt(0));
+            quote.setCreationDate(new Date(result.getInt(3)));
+            //quotes.add(quote);
+            resQuote = quote;
+            result.moveToNext();
+        }*/
+        result.close();
+        return resQuote;
     }
 
     public void addQuote(Quote quote){
@@ -37,22 +65,31 @@ public class SQLiteQuoteDao {
         db.insert(DatabaseOpenHelper.DATABASE_TABLE,null,values);
     }
 
-    public void updateQuote(Quote quote){
+    public int updateQuote(Quote quote){
         // update this quote to db
-        Log.d(QuoteListActivity.TAG, "Update to DB: " + quote);
+        Log.d(QuoteListActivity.TAG, "Update to DB: " + quote + " quote.getId(): " + quote.getId());
+        ContentValues values = new ContentValues();
+        String[] whereArgs = {String.valueOf(quote.getId())};
+        values.put(DatabaseOpenHelper.COLUMN_STR_QUOTE,quote.getStrQuote());
+        values.put(DatabaseOpenHelper.COLUMN_RATING,quote.getRating());
+        values.put(DatabaseOpenHelper.COLUMN_DATE, String.valueOf(quote.getCreationDate()));
+        return db.update(DatabaseOpenHelper.DATABASE_TABLE,values,"id=?",whereArgs);
+
     }
 
-    public List<Quote> getAllQuotes(){
+    public ArrayList<Quote> getAllQuotes(){
 
         Log.d(QuoteListActivity.TAG, "List all quotes");
         String[] columns = {DatabaseOpenHelper.COLUMN_ID, DatabaseOpenHelper.COLUMN_STR_QUOTE, DatabaseOpenHelper.COLUMN_RATING, DatabaseOpenHelper.COLUMN_DATE };
         Cursor result = db.query(DatabaseOpenHelper.DATABASE_TABLE, columns,null,null,null,null,null);
-        List<Quote> quotes = new ArrayList<Quote>();
+        ArrayList<Quote> quotes = new ArrayList<Quote>();
         result.moveToFirst();
         while(!result.isAfterLast()){
             Quote quote = new Quote(result.getString(1));
             quote.setRating(result.getInt(2));
-            //quote.setCreationDate(result.getInt(3));
+            quote.setId(result.getInt(0));
+            quote.setCreationDate(new Date(result.getInt(3)));
+            Log.d(QuoteListActivity.TAG, "quote id: " + quote.getId());
             quotes.add(quote);
             result.moveToNext();
         }

@@ -11,6 +11,7 @@ public class Quote implements Serializable {
     private String strQuote;
     private int rating;
     private Date creationDate;
+    private int id;
 
     public Quote(String strQuote) {
         this.strQuote = strQuote;
@@ -30,8 +31,16 @@ public class Quote implements Serializable {
         return rating;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getCreationDate() {
