@@ -23,7 +23,7 @@ import fr.mds.geekquote.model.Quote;
 // - associate the layout with the activity
 
 
-public class SecondActivity extends Activity {
+public class QuoteDetailActivity extends Activity {
 
     public static final String TAG = "geekquote";
     private Button btn_second_back;
@@ -58,8 +58,10 @@ public class SecondActivity extends Activity {
             Integer position = null;
 
             position = extras.getInt("position");
+            Log.d(TAG, "Position: " + position );
             Quote quote = (Quote) extras.getSerializable("quote");
-            Log.d(TAG, "Position: " + position + " " + quote.toString());
+            Log.d(TAG, "quote: " + quote);
+            Log.d(TAG, "quote.toString: " + quote.toString());
 
             tv_second.setText(quote.toString());
         }
@@ -81,15 +83,15 @@ public class SecondActivity extends Activity {
 
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.d(TAG,"Act 2 onRestoreInstanceState " + savedInstanceState);
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        Log.d(TAG,"Act 2 onSaveInstanceState " + outState);
-        super.onSaveInstanceState(outState);
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        Log.d(TAG,"Act 2 onRestoreInstanceState " + savedInstanceState);
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        Log.d(TAG,"Act 2 onSaveInstanceState " + outState);
+//        super.onSaveInstanceState(outState);
+//    }
 }
